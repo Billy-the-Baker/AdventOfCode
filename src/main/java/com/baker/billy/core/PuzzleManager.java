@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PuzzleManager {
+    public static final int ALL_DAYS = -1;
+
     private static final int MIN_YEAR = 2015;
     private static final int CURRENT_YEAR = LocalDate.now().getYear();
     private static final int PIVOT_YEAR = 2025;
@@ -26,7 +28,7 @@ public class PuzzleManager {
             throw new IllegalArgumentException("[ERROR]: PuzzleManager.java : new() : Day falls outside of authorized range");
         }
         this.day = day;
-        if(part < 1 || part > 2) {
+        if(part != -1 && (part < 1 || part > 2)) {
             throw new IllegalArgumentException("[ERROR]: PuzzleManager.java : new() : Part falls outside of authorized range");
         }
         this.part = part;
@@ -47,6 +49,7 @@ public class PuzzleManager {
             puzzles.add(Puzzle.getPuzzle(year, className));
         }
         for(Puzzle puzz : puzzles) {
+            // Implement specific part completion instead of just doTasks
             puzz.doTasks();
         }
         //String url = "https://adventofcode.com/" + year + "/day/" + day + "/input";

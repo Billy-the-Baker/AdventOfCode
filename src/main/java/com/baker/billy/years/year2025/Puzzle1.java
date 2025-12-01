@@ -36,7 +36,6 @@ public class Puzzle1 extends Puzzle {
         int location = 50;
         int numZero = 0;
         for(String str : input) {
-            int prev = location;
             char direction = str.charAt(0);
             int magnitude = Integer.parseInt(str.substring(1));
 
