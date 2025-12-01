@@ -49,6 +49,24 @@ public class Puzzle1 extends Puzzle {
                     numZero++;
                 }
             }
+
+            /*int prev = location;
+            numZero += magnitude / 100;
+            int diff = magnitude % 100;
+            if(direction == 'L') {
+                location = (location - diff + 100) % 100;
+                if(location > prev && prev != 0) {
+                    numZero++;
+                }
+            } else {
+                location = (location + diff) % 100;
+                if(location < prev && location != 0) {
+                    numZero++;
+                }
+            }
+            if(prev != 0 && location == 0) {
+                numZero++;
+            }**/
         }
         System.out.printf("The password is %d\n", numZero);
     }
