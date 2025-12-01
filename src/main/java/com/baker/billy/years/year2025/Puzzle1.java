@@ -39,6 +39,7 @@ public class Puzzle1 extends Puzzle {
             char direction = str.charAt(0);
             int magnitude = Integer.parseInt(str.substring(1));
 
+            // Brute force solution
             for(int i = 0; i < magnitude; i++) {
                 if(direction == 'L') {
                     location = (location - 1 + 100) % 100;
@@ -50,6 +51,7 @@ public class Puzzle1 extends Puzzle {
                 }
             }
 
+            // Non-brute force solution
             /*int prev = location;
             numZero += magnitude / 100;
             int diff = magnitude % 100;
