@@ -14,14 +14,43 @@ public class Puzzle1 extends Puzzle {
 
     @Override
     protected void task1() {
-        System.out.println("Task 1");
+        int location = 50;
+        int numZero = 0;
         for(String str : input) {
-            System.out.println(str);
+            char direction = str.charAt(0);
+            int magnitude = Integer.parseInt(str.substring(1));
+            if(direction == 'L') {
+                location = (location - magnitude + 100) % 100;
+            } else {
+                location = (location + magnitude) % 100;
+            }
+            if(location == 0) {
+                numZero++;
+            }
         }
+        System.out.printf("The password is %d\n", numZero);
     }
 
     @Override
     protected void task2() {
-        System.out.println("Task 2");
+        int location = 50;
+        int numZero = 0;
+        for(String str : input) {
+            int prev = location;
+            char direction = str.charAt(0);
+            int magnitude = Integer.parseInt(str.substring(1));
+
+            for(int i = 0; i < magnitude; i++) {
+                if(direction == 'L') {
+                    location = (location - 1 + 100) % 100;
+                } else {
+                    location = (location + 1) % 100;
+                }
+                if(location == 0) {
+                    numZero++;
+                }
+            }
+        }
+        System.out.printf("The password is %d\n", numZero);
     }
 }

@@ -40,8 +40,7 @@ public abstract class Puzzle {
         String root = "src/main/resources/year/" + year;
         Path rootDirectory = Paths.get(root);
 
-        if(!Files.exists(rootDirectory)) { // Technically this isn't complete, the program may not have access to the directory
-            // Create the files here
+        if(!Files.exists(rootDirectory)) { // Technically this isn't accurate, the program may not have access to the directory
             try {
                 Files.createDirectory(rootDirectory);
             } catch (IOException e) {
