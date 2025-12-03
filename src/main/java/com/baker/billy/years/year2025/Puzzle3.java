@@ -16,7 +16,7 @@ public class Puzzle3 extends Puzzle {
     protected void task1() {
         long sum = 0L;
         for(String str : input) {
-            sum += findLargestDigitOfLength(str, 2);
+            sum += findLargestNumberOfLength(str, 2);
         }
         System.out.printf("The total output joltage is %d\n", sum);
     }
@@ -25,7 +25,7 @@ public class Puzzle3 extends Puzzle {
     protected void task2() {
         long sum = 0L;
         for(String str : input) {
-            sum += findLargestDigitOfLength(str, 12);
+            sum += findLargestNumberOfLength(str, 12);
         }
         System.out.printf("The total output joltage is %d\n", sum);
     }
@@ -37,7 +37,7 @@ public class Puzzle3 extends Puzzle {
      * @param length the number of digits required in the final number
      * @return the largest numerical value from the given string
      */
-    private long findLargestDigitOfLength(String sequence, int length) {
+    private long findLargestNumberOfLength(String sequence, int length) {
         if(sequence.length() < length) {
             return 0;
         }
