@@ -62,6 +62,6 @@ public class Puzzle3 extends Puzzle {
             number.append((char)max);
             remainingLength--;
         }
-        return Long.parseLong(number.substring(number.length() - length));
+        return Long.parseLong(number.toString());
     }
 }
