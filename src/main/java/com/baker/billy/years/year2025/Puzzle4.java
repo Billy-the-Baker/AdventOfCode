@@ -24,30 +24,7 @@ public class Puzzle4 extends Puzzle {
 
     @Override
     protected void task1() {
-        int y = 0;
-        for(String str : input) {
-            int x = 0;
-            for(char c : str.toCharArray()) {
-                if(c == '@') {
-                    Point p = new Point(x, y);
-                    graph.put(p, new HashSet<>());
-                    for(int dx = x - 1; dx < x + 2; dx++) {
-                        for(int dy = y - 1; dy < y + 2; dy++) {
-                            Point key = new Point(dx, dy);
-                            if(graph.containsKey(key)) {
-                                double distSq = Math.pow((key.x - x), 2) + Math.pow((key.y - y), 2);
-                                if (distSq <= 2 && distSq != 0) {
-                                    graph.get(key).add(p);
-                                    graph.get(p).add(key);
-                                }
-                            }
-                        }
-                    }
-                }
-                x++;
-            }
-            y++;
-        }
+        constructGraph();
 
         long total = graph.keySet().stream()
                 .filter(k -> graph.get(k).size() < 4)
@@ -73,5 +50,32 @@ public class Puzzle4 extends Puzzle {
         } while(!toRemove.isEmpty());
 
         System.out.printf("There are %d rolls that can be removed\n", total);
+    }
+
+    private void constructGraph() {
+        int y = 0;
+        for(String str : input) {
+            int x = 0;
+            for(char c : str.toCharArray()) {
+                if(c == '@') {
+                    Point p = new Point(x, y);
+                    graph.put(p, new HashSet<>());
+                    for(int dx = x - 1; dx < x + 2; dx++) {
+                        for(int dy = y - 1; dy < y + 2; dy++) {
+                            Point key = new Point(dx, dy);
+                            if(graph.containsKey(key)) {
+                                double distSq = Math.pow((key.x - x), 2) + Math.pow((key.y - y), 2);
+                                if (distSq <= 2 && distSq != 0) {
+                                    graph.get(key).add(p);
+                                    graph.get(p).add(key);
+                                }
+                            }
+                        }
+                    }
+                }
+                x++;
+            }
+            y++;
+        }
     }
 }
