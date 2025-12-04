@@ -31,11 +31,16 @@ public class Puzzle4 extends Puzzle {
                 if(c == '@') {
                     Point p = new Point(x, y);
                     graph.put(p, new HashSet<>());
-                    for (var key : graph.keySet()) {
-                        double distSq = Math.pow((key.x - x), 2) + Math.pow((key.y - y), 2);
-                        if (distSq <= 2 && distSq != 0) {
-                            graph.get(key).add(p);
-                            graph.get(p).add(key);
+                    for(int dx = x - 1; dx < x + 2; dx++) {
+                        for(int dy = y - 1; dy < y + 2; dy++) {
+                            Point key = new Point(dx, dy);
+                            if(graph.containsKey(key)) {
+                                double distSq = Math.pow((key.x - x), 2) + Math.pow((key.y - y), 2);
+                                if (distSq <= 2 && distSq != 0) {
+                                    graph.get(key).add(p);
+                                    graph.get(p).add(key);
+                                }
+                            }
                         }
                     }
                 }
@@ -60,11 +65,10 @@ public class Puzzle4 extends Puzzle {
             toRemove = graph.keySet().stream()
                     .filter(k -> graph.get(k).size() < 4)
                     .toList();
-            Consumer<Point> removeElement = k -> {
+            toRemove.forEach(k -> {
+                graph.get(k).forEach(k2 -> graph.get(k2).remove(k));
                 graph.remove(k);
-                graph.keySet().forEach(k2 -> graph.get(k2).remove(k));
-            };
-            toRemove.forEach(removeElement);
+            });
             total += toRemove.size();
         } while(!toRemove.isEmpty());
 
