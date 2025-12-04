@@ -20,12 +20,11 @@ public class Puzzle4 extends Puzzle {
      */
     public Puzzle4(int year) {
         super(year);
+        constructGraph();
     }
 
     @Override
     protected void task1() {
-        constructGraph();
-
         long total = graph.keySet().stream()
                 .filter(k -> graph.get(k).size() < 4)
                 .toList()
