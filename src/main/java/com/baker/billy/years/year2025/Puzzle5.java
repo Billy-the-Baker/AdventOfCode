@@ -5,14 +5,12 @@ import com.baker.billy.core.Puzzle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Puzzle5 extends Puzzle {
-    private Set<Range> fresh;
+    List<Range> ranges;
 
     /**
      * Creates a new puzzle
@@ -21,12 +19,11 @@ public class Puzzle5 extends Puzzle {
      */
     public Puzzle5(int year) {
         super(year);
-        fresh = new TreeSet<Range>((Range r1, Range r2) -> Long.compare(r2.end, r1.end));
+        ranges = new ArrayList<>();
     }
 
     @Override
     protected void task1() {
-        List<Range> ranges = new ArrayList<>();
         boolean isRange = true;
         int count = 0;
         for(String str : input) {
@@ -41,14 +38,10 @@ public class Puzzle5 extends Puzzle {
                 addRangeToSortedList(ranges, range);
             } else {
                 long test = Long.parseLong(str);
-                boolean isFresh = false;
                 for (Range r : ranges) {
                     if (test <= r.end && test >= r.start) {
-                        fresh.add(r);
-                        if (!isFresh) {
-                            count++;
-                            isFresh = true;
-                        }
+                        count++;
+                        break;
                     }
                 }
             }
@@ -59,7 +52,7 @@ public class Puzzle5 extends Puzzle {
     @Override
     protected void task2() {
         long total = 0L;
-        for(Range r : fresh) {
+        for(Range r : ranges) {
             total += r.end - r.start + 1;
         }
         System.out.printf("There are %d total fresh ingredients\n", total);
