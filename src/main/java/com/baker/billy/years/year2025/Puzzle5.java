@@ -39,7 +39,7 @@ public class Puzzle5 extends Puzzle {
             } else {
                 long test = Long.parseLong(str);
                 for (Range r : ranges) {
-                    if (test <= r.end && test >= r.start) {
+                    if (r.inRange(test)) {
                         count++;
                         break;
                     }
@@ -53,7 +53,7 @@ public class Puzzle5 extends Puzzle {
     protected void task2() {
         long total = 0L;
         for(Range r : ranges) {
-            total += r.end - r.start + 1;
+            total += r.length();
         }
         System.out.printf("There are %d total fresh ingredients\n", total);
     }
@@ -71,8 +71,8 @@ public class Puzzle5 extends Puzzle {
         Range initial = ranges.getFirst();
         for(int i = 1; i < ranges.size(); i++) {
             Range r = ranges.get(i);
-            if(initial.start <= r.end && r.start <= initial.end) {
-                initial = new Range(Math.min(initial.start, r.start), Math.max(initial.end, r.end));
+            if(initial.overlap(r)) {
+                initial = initial.merge(r);
             } else {
                 finalRanges.add(initial);
                 initial = r;
@@ -83,6 +83,22 @@ public class Puzzle5 extends Puzzle {
     }
 
     private record Range(long start, long end) implements Comparable<Range> {
+        public boolean inRange(long value) {
+            return value <= end && value >= start;
+        }
+
+        public boolean overlap(Range r) {
+            return start <= r.end && r.start <= end;
+        }
+
+        public Range merge(Range r) {
+            return new Range(Math.min(start, r.start), Math.max(end, r.end));
+        }
+
+        public long length() {
+            return end - start + 1;
+        }
+
         @Override
         public int compareTo(Range o) {
             return Long.compare(end, o.end);
