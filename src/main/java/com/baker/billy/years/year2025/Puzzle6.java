@@ -3,7 +3,6 @@ package com.baker.billy.years.year2025;
 import com.baker.billy.core.Puzzle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,8 +51,7 @@ public class Puzzle6 extends Puzzle {
 
     @Override
     protected void task2() {
-        data = transpose(data);
-        System.out.printf("The grand total using proper cephalopod numbers is %d\n", calculateProperCephaMath(data));
+        System.out.printf("The grand total using proper cephalopod numbers is %d\n", properCephalopodMath(data));
     }
 
     private List<String> getMatches(String input, String regex) {
@@ -81,41 +79,36 @@ public class Puzzle6 extends Puzzle {
         return result;
     }
     
-    private long calculateProperCephaMath(char[][] data) {
+    private long properCephalopodMath(char[][] data) {
         long result = 0L;
-        char operator = '!';
         
+        StringBuilder buffer = new StringBuilder();
         long accumulator = 0L;
-        for (int row = 0; row < data.length; row++) {
-            char[] dataRow = data[row];
-            char op = data[row][data[row].length - 1];
-            if(op == '*' || op == '+') {
-                operator = op;
-                accumulator = op == '*' ? 1L : 0L;
-                dataRow = Arrays.copyOf(dataRow, dataRow.length - 1);
+        char operator = '+';
+        
+        for(int col = 0; col < data[0].length; col++) {
+            for(int row = 0; row < data.length; row++) {
+                char c = data[row][col];
+                if(c == '*' || c == '+') {
+                    operator = c;
+                    accumulator = operator == '*' ? 1L : 0L;
+                } else {
+                    if(c != ' ') {
+                        buffer.append(c);
+                    }
+                }
             }
-            String toConvert = String.valueOf(dataRow).trim();
-            if(!toConvert.isEmpty()) {
-                long val = Long.parseLong(toConvert);
-                accumulator = operator == '*' ? accumulator * val : accumulator + val;
-            } else {
+            if(buffer.isEmpty()) {
                 result += accumulator;
+                accumulator = operator == '*' ? 1L : 0L;
+            } else {
+                long val = Long.parseLong(buffer.toString());
+                accumulator = operator == '*' ? accumulator * val : accumulator + val;
+                buffer.setLength(0);
             }
         }
         result += accumulator;
         
         return result;
-    }
-
-    private char[][] transpose(char[][] in) {
-        char[][] out = new char[in[0].length][in.length];
-
-        for(int col = 0; col < in[0].length; col++) {
-            for(int row = 0; row < in.length; row++) {
-                out[col][row] = in[row][col];
-            }
-        }
-
-        return out;
     }
 }
