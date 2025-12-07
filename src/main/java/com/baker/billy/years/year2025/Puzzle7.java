@@ -72,9 +72,7 @@ public class Puzzle7 extends Puzzle {
 
     @Override
     protected void task2() {
-        System.out.printf("There are %d different timelines a tachyon could end up on\n", 
-                trickleDown(diagram, 0, diagram[0].length / 2));
-        /*for(int row = diagram.length - 1; row >= 0; row--) {
+        for(int row = diagram.length - 1; row >= 0; row--) {
             for(int col = 0; col < diagram[row].length; col++) {
                 if(diagram[row][col] == '^') {
                     // Find the path on either side to another ^ or the bottom and store the score
@@ -103,7 +101,10 @@ public class Puzzle7 extends Puzzle {
             System.out.printf("There are %d different timelines a tachyon could end up on\n", timeLines);
         } else {
             System.out.println("Could not pull the number of timelines out of the paths");
-        }*/
+        }
+
+        //System.out.printf("There are %d different timelines a tachyon could end up on\n",
+        //        trickleDown(diagram, 0, diagram[0].length / 2));
     }
     
     private long trickleDown(char[][] arr, int row, int col) {
