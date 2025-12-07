@@ -9,6 +9,7 @@ import java.util.Stack;
 
 public class Puzzle7 extends Puzzle {
     Map<Point, Long> paths;
+    char[][] diagram;
     
     /**
      * Creates a new puzzle
@@ -18,13 +19,13 @@ public class Puzzle7 extends Puzzle {
     public Puzzle7(int year) {
         super(year);
         paths = new HashMap<>();
+        diagram = createDiagram();
     }
 
     @Override
     protected void task1() {
         long total = 0L;
         
-        char[][] diagram = createDiagram();
         int currentRow = 0;
         Stack<Point> trail = new Stack<>();
         Point current = new Point(diagram[0].length / 2, currentRow);
@@ -69,9 +70,7 @@ public class Puzzle7 extends Puzzle {
     }
 
     @Override
-    protected void task2() {
-        char[][] diagram = createDiagram();
-        
+    protected void task2() {        
         for(int row = diagram.length - 1; row >= 0; row--) {
             for(int col = 0; col < diagram[row].length; col++) {
                 if(diagram[row][col] == '^') {
