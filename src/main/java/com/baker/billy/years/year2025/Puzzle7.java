@@ -3,6 +3,7 @@ package com.baker.billy.years.year2025;
 import com.baker.billy.core.Puzzle;
 
 import java.awt.Point;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -70,8 +71,10 @@ public class Puzzle7 extends Puzzle {
     }
 
     @Override
-    protected void task2() {        
-        for(int row = diagram.length - 1; row >= 0; row--) {
+    protected void task2() {
+        System.out.printf("There are %d different timelines a tachyon could end up on\n", 
+                trickleDown(diagram, 0, diagram[0].length / 2));
+        /*for(int row = diagram.length - 1; row >= 0; row--) {
             for(int col = 0; col < diagram[row].length; col++) {
                 if(diagram[row][col] == '^') {
                     // Find the path on either side to another ^ or the bottom and store the score
@@ -100,7 +103,32 @@ public class Puzzle7 extends Puzzle {
             System.out.printf("There are %d different timelines a tachyon could end up on\n", timeLines);
         } else {
             System.out.println("Could not pull the number of timelines out of the paths");
+        }*/
+    }
+    
+    private long trickleDown(char[][] arr, int row, int col) {
+        long[] line = new long[arr[row].length];
+        line[col] = 1L;
+        int minCol = col;
+        int maxCol = col;
+        int max = maxCol;
+        for(row = 1; row < arr.length; row++) {
+            for(col = minCol; col < maxCol + 1; col++) {
+                if(arr[row][col] == '^') {
+                    if(inBounds(line.length, col - 1)) {
+                        minCol = Math.min(minCol, col - 1);
+                        line[col - 1] += line[col];
+                    }
+                    if(inBounds(line.length, col + 1)) {
+                        max = Math.max(maxCol, col + 1);
+                        line[col + 1] += line[col];
+                    }
+                    line[col] = 0;
+                }
+            }
+            maxCol = max;
         }
+        return Arrays.stream(line).sum();
     }
     
     private long travel(char[][] arr, int col, int row) {
