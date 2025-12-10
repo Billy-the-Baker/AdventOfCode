@@ -43,9 +43,7 @@ public class Puzzle9 extends Puzzle {
                 Point p2 = points.get(j);
                 long area = (long)(Math.abs(p1.x - p2.x) + 1) * (Math.abs(p1.y - p2.y) + 1);
                 
-                if(area > max) {
-                    max = area;
-                }
+                max = Math.max(max, area);
             }
         }
         System.out.printf("The maximum area you can attain is %d\n", max);
